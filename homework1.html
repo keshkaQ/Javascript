@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homework №1 - Обмен значений между переменными</title>
+  </head>
+  <body>
+    <script>
+      let a = +prompt("Введите первое число (A):", "0");
+      let b = +prompt("Введите второе число (B):", "0");
+
+      if (isNaN(a) || isNaN(b)) {
+        alert("Пожалуйста, введите корректные числа!");
+      } else {
+        alert(`Исходные значения:\nA = ${a}\nB = ${b}`);
+
+        let temp = a;
+        a = b;
+        b = temp;
+
+        alert(`После обмена значений:\nA = ${a}\nB = ${b}`);
+      }
+    </script>
+  </body>
+</html>
