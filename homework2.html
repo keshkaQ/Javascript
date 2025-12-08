@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homework №2</title>
+  </head>
+  <body>
+    <script>
+      // ЗАДАЧА 1: Среднее арифметическое от 1 до K
+      console.log("=== ЗАДАЧА 1 ===");
+
+      function createArrayB(mass) {
+        const massB = new Array(mass.length);
+        let sum = 0;
+        for (let k = 0; k < mass.length; k++) {
+          sum += mass[k];
+          massB[k] = sum / (k + 1);
+        }
+        return massB;
+      }
+
+      const massA = [2, 1, 3, 5, 9];
+      const massB = createArrayB(massA);
+      console.log("Массив A:", massA);
+      console.log("Массив B (средние от 1 до K):", massB);
+      console.log("");
+
+      // ЗАДАЧА 2: Среднее арифметическое от K до N
+      console.log("=== ЗАДАЧА 2 ===");
+
+      function createArrayB2(massiv) {
+        const massivB = new Array(massiv.length);
+        let sum = massiv.reduce((a, b) => a + b, 0);
+        let currentSum = sum;
+        for (let k = 0; k < massiv.length; k++) {
+          massivB[k] = currentSum / (massiv.length - k);
+          currentSum -= massiv[k];
+        }
+        return massivB;
+      }
+
+      const A = [8, 2, 3, 7, 10];
+      const B = createArrayB2(A);
+      console.log("Массив A:", A);
+      console.log("Массив B (средние от K до N):", B);
+      console.log("");
+
+      // ЗАДАЧА 3: Разворот между min и max элементами
+      console.log("=== ЗАДАЧА 3 ===");
+
+      function changeElements(massiv) {
+        const result = [...massiv];
+
+        const minIndex = result.indexOf(Math.min(...result));
+        const maxIndex = result.indexOf(Math.max(...result));
+
+        const start = Math.min(minIndex, maxIndex);
+        const end = Math.max(minIndex, maxIndex);
+
+        const extracted = result.splice(start, end - start + 1);
+        const reversed = extracted.reverse();
+        result.splice(start, 0, ...reversed);
+
+        return result;
+      }
+
+      const massivA = [8, 2, 3, 7, 10, 4, 5, 20, 52, 56, 21, 67, 99, 11, 42];
+      const massivB = changeElements(massivA);
+      console.log("Исходный массив:", massivA);
+      console.log("После разворота между min и max:", massivB);
+    </script>
+  </body>
+</html>
