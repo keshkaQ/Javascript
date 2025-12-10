@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homework 3</title>
+  </head>
+  <body>
+    <!-- В каждой строке матрицы отсортировать четные числа по возрастанию. -->
+    <script>
+      let rows = 3;
+      let cols = 3;
+      let matrix = [
+        [50, 10, 30], // Чётные: 50, 10, 30 -> после сортировка: 10, 30, 50
+        [10, 8, 42], // Чётные: 8,10, 42 -> после сортировки: 8, 10, 42
+        [2, 7, 6], // Чётные: 2,6 -> после сортировки: 2,7,6
+      ];
+
+      // Заполнение рандомными числами, браузер автоматически сортирует при отображении
+      //   for (let i = 0; i < rows; i++) {
+      //     matrix[i] = [];
+      //     for (let j = 0; j < cols; j++) {
+      //       matrix[i][j] = Math.round(Math.random() * 100);
+      //     }
+      //   }
+
+      document.write("Исходная матрица:<br>");
+      for (let i = 0; i < rows; i++) {
+        document.write(matrix[i].join(", ") + "<br>");
+      }
+
+      for (let a = 0; a < rows; a++) {
+        let sortedEvens = matrix[a]
+          .filter((x) => x % 2 == 0)
+          .sort((x, y) => x - y);
+
+        let evenIndex = 0;
+        for (let b = 0; b < cols; b++) {
+          if (matrix[a][b] % 2 == 0) {
+            matrix[a][b] = sortedEvens[evenIndex];
+            evenIndex++;
+          }
+        }
+      }
+
+      document.write("Результат:<br>");
+      for (let i = 0; i < rows; i++) {
+        document.write(matrix[i].join(", ") + "<br>");
+      }
+    </script>
+  </body>
+</html>
