@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homework 4</title>
+  </head>
+  <body>
+    <!-- Генератор последовательности простых чисел
+	Создайте primeSequenceGenerator(start = 2), возвращающую функцию nextPrime(), генерирующую следующее простое число с помощью замыкания. -->
+    <script>
+      function primeSequenceGenerator(start = 2) {
+        let current = start;
+        return function nextPrime() {
+          current++;
+          while (!isPrime(current)) {
+            current++;
+          }
+          return current;
+        };
+      }
+
+      function isPrime(num) {
+        if (num < 2) return false;
+        if (num == 2) return true;
+        if (num % 2 == 0) return false;
+
+        let limit = Math.sqrt(num);
+        for (let i = 3; i <= limit; i += 2) {
+          if (num % i == 0) {
+            return false;
+          }
+        }
+        return true;
+      }
+      const getNextPrime = primeSequenceGenerator();
+      document.writeln(getNextPrime() + "<br>");
+      document.writeln(getNextPrime() + "<br>");
+      document.writeln(getNextPrime() + "<br>");
+      document.writeln(getNextPrime() + "<br>");
+    </script>
+  </body>
+</html>
