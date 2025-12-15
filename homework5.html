@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homework 5 - Магазины</title>
+    <style>
+      body {
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+      h1 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .output {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        font-size: 20px;
+        border-left: 5px solid #4caf50;
+      }
+      button {
+        margin: 10px 10px;
+        padding: 15px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+      .store-info strong {
+        color: #2c3e50;
+      }
+      .controls {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .counter {
+        text-align: center;
+        color: #666;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Каталог магазинов</h1>
+
+    <div class="controls">
+      <button onclick="showStoreInfo()">🎲 Показать случайный магазин</button>
+      <button onclick="showNextStore()">➡️ Следующий магазин</button>
+      <button onclick="showPreviousStore()">⬅️ Предыдущий магазин</button>
+      <button onclick="showAllStores()">📋 Показать все магазины</button>
+    </div>
+
+    <div id="output"></div>
+
+    <div class="counter" id="counter"></div>
+
+    <script>
+      class Magazin {
+        #name;
+        #address;
+        #profile;
+        #phone;
+        #email;
+
+        constructor(name, address, profile, phone, email) {
+          this.#name = name;
+          this.#address = address;
+          this.#profile = profile;
+          this.#phone = phone;
+          this.#email = email;
+        }
+
+        input(name, address, profile, phone, email) {
+          this.#name = name;
+          this.#address = address;
+          this.#profile = profile;
+          this.#phone = phone;
+          this.#email = email;
+          return this;
+        }
+
+        print() {
+          return `
+                    <div class="store-info">
+                        <strong>🏬 Название:</strong> ${this.#name}<br>
+                        <strong>📍 Адрес:</strong> ${this.#address}<br>
+                        <strong>📝 Профиль:</strong> ${this.#profile}<br>
+                        <strong>📞 Телефон:</strong> ${this.#phone}<br>
+                        <strong>📧 Email:</strong> ${this.#email}<br>
+                    </div>
+                `;
+        }
+
+        printDetailed() {
+          return `
+                    <div class="output">
+                        <h3>${this.#name}</h3>
+                        ${this.print()}
+                    </div>
+                `;
+        }
+
+        getName() {
+          return this.#name;
+        }
+        getAddress() {
+          return this.#address;
+        }
+        getProfile() {
+          return this.#profile;
+        }
+        getPhone() {
+          return this.#phone;
+        }
+        getEmail() {
+          return this.#email;
+        }
+
+        setName(name) {
+          this.#name = name;
+          return this;
+        }
+        setAddress(address) {
+          this.#address = address;
+          return this;
+        }
+        setProfile(profile) {
+          this.#profile = profile;
+          return this;
+        }
+        setPhone(phone) {
+          this.#phone = phone;
+          return this;
+        }
+        setEmail(email) {
+          this.#email = email;
+          return this;
+        }
+      }
+
+      const stores = [
+        new Magazin(
+          "Перекресток",
+          "ул. Ленина, д. 45, ТЦ 'Центральный'",
+          "Супермаркет продуктов",
+          "+7 (495) 123-45-67",
+          "info@perekrestok.ru"
+        ),
+        new Magazin(
+          "Ашан",
+          "Московское шоссе, 24-й км, ТЦ 'Мега'",
+          "Гипермаркет",
+          "8-800-700-5-700",
+          "client@auchan.ru"
+        ),
+        new Magazin(
+          "Магнит",
+          "пр. Мира, д. 89",
+          "Сеть магазинов у дома",
+          "+7 (812) 456-78-90",
+          "magnit@magnit.ru"
+        ),
+        new Magazin(
+          "Пятерочка",
+          "ул. Советская, д. 12",
+          "Дискаунтер",
+          "8-800-555-55-05",
+          "support@5ka.ru"
+        ),
+        new Magazin(
+          "Лента",
+          "ш. Энтузиастов, д. 33",
+          "Гипермаркет",
+          "+7 (495) 987-65-43",
+          "lenta@lenta.com"
+        ),
+        new Magazin(
+          "М.Видео",
+          "ул. Тверская, д. 15, ТЦ 'Охотный Ряд'",
+          "Электроника и бытовая техника",
+          "8-800-600-77-75",
+          "shop@mvideo.ru"
+        ),
+        new Magazin(
+          "Спортмастер",
+          "Ленинградский пр-т, д. 78А",
+          "Спортивные товары",
+          "+7 (495) 234-56-78",
+          "sportmaster@sportmaster.ru"
+        ),
+        new Magazin(
+          "Яндекс Маркет",
+          "ул. Льва Толстого, д. 16 (склад)",
+          "Онлайн-маркетплейс",
+          "8-800-250-25-25",
+          "market@yandex.ru"
+        ),
+        new Magazin(
+          "DNS",
+          "пр. Космонавтов, д. 101",
+          "Компьютерная техника",
+          "8-800-770-79-99",
+          "dns@dns-shop.ru"
+        ),
+        new Magazin(
+          "Золотое Яблоко",
+          "ул. Арбат, д. 25",
+          "Косметика и парфюмерия",
+          "+7 (495) 777-88-99",
+          "goldapple@goldapple.ru"
+        ),
+        new Magazin(
+          "Мир Книги",
+          "ул. Кирова, д. 8",
+          "Книжный магазин",
+          "+7 (495) 111-22-33",
+          "books@mirknigi.ru"
+        ),
+        new Magazin(
+          "Евросеть",
+          "пл. Революции, д. 2",
+          "Связь и гаджеты",
+          "8-800-700-10-10",
+          "euroset@euroset.ru"
+        ),
+        new Magazin(
+          "СберМегаМаркет",
+          "ул. Вавилова, д. 19 (логистический центр)",
+          "Онлайн-супермаркет",
+          "8-800-555-00-55",
+          "sbermegamarket@sber.ru"
+        ),
+        new Magazin(
+          "Детский мир",
+          "ул. Молодогвардейская, д. 54",
+          "Детские товары",
+          "+7 (495) 666-77-88",
+          "detmir@detmir.ru"
+        ),
+        new Magazin(
+          "Fix Price",
+          "ул. Рабочая, д. 32",
+          "Магазин фиксированных цен",
+          "8-800-250-54-55",
+          "fixprice@fix-price.ru"
+        ),
+      ];
+
+      let currentIndex = 0;
+      let lastRandomIndex = -1;
+
+      function getRandomStore() {
+        let randomIndex;
+        do {
+          randomIndex = Math.floor(Math.random() * stores.length);
+        } while (randomIndex === lastRandomIndex && stores.length > 1);
+
+        lastRandomIndex = randomIndex;
+        return randomIndex;
+      }
+
+      function showStoreByIndex(index) {
+        const outputDiv = document.getElementById("output");
+        const counterDiv = document.getElementById("counter");
+
+        currentIndex = index;
+        const store = stores[currentIndex];
+
+        outputDiv.innerHTML = store.printDetailed();
+        counterDiv.textContent = `Магазин ${currentIndex + 1} из ${
+          stores.length
+        }`;
+      }
+
+      function showStoreInfo() {
+        const randomIndex = getRandomStore();
+        showStoreByIndex(randomIndex);
+      }
+
+      function showNextStore() {
+        currentIndex = (currentIndex + 1) % stores.length;
+        showStoreByIndex(currentIndex);
+      }
+
+      function showPreviousStore() {
+        currentIndex = (currentIndex - 1 + stores.length) % stores.length;
+        showStoreByIndex(currentIndex);
+      }
+
+      function showAllStores() {
+        const outputDiv = document.getElementById("output");
+        const counterDiv = document.getElementById("counter");
+
+        let allStoresHTML = "<h2> Все магазины:</h2>";
+
+        stores.forEach((store, index) => {
+          allStoresHTML += `
+                    <div class="output">
+                        <h3>${index + 1}. ${store.getName()}</h3>
+                        ${store.print()}
+                    </div>
+                `;
+        });
+
+        outputDiv.innerHTML = allStoresHTML;
+        counterDiv.textContent = `Всего магазинов: ${stores.length}`;
+      }
+    </script>
+  </body>
+</html>
