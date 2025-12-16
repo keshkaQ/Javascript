@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homework №6</title>
+  </head>
+  <body>
+    <!-- Регулярные выражения
+     1. Только цифры
+     2. Только маленькие англ буквы (без учета регистра)
+     3. Только большие русские буквы (Ё то не в диапазоне)
+     4. Убрать знаки препинания все и непечатные символы -->
+    <script>
+      const onlyDigits = /^\d+$/;
+      console.log("1. Только цифры:");
+      console.log(onlyDigits.test("123")); // true
+      console.log(onlyDigits.test("123abc")); // false
+      console.log(onlyDigits.test("")); // false (пустая строка)
+      console.log(onlyDigits.test("12.34")); // false (есть точка)
+      console.log(onlyDigits.test("007")); // true
+
+      const enLettersLowerCase = /^[a-z]+$/;
+      console.log("\n2. Только маленькие английские буквы:");
+      console.log(enLettersLowerCase.test("hello")); // true
+      console.log(enLettersLowerCase.test("HELLO")); // false
+      console.log(enLettersLowerCase.test("Hello")); // false
+      console.log(enLettersLowerCase.test("привет")); // false
+
+      const rusLettersUpperCaseWithYo = /^[А-ЯЁ]+$/;
+      console.log("\n3. Русские заглавные буквы (с Ё):");
+      console.log(rusLettersUpperCaseWithYo.test("ПРИВЕТ")); // true
+      console.log(rusLettersUpperCaseWithYo.test("ЁЖИК")); // true
+      console.log(rusLettersUpperCaseWithYo.test("Привет")); // false
+      console.log(rusLettersUpperCaseWithYo.test("ПРИВЕТ123")); // false
+
+      function cleanText(str) {
+        return str
+          .replace(/[^\p{L}\p{N}\s]/gu, "")
+          .replace(/\s+/g, " ")
+          .trim();
+      }
+  
+      console.log("\n4. Без знаков препинания и непечатных символов:");
+      console.log(cleanText("Hello, World!")); // "Hello World"
+      console.log(cleanText("Цена: 100$")); // "Цена 100"
+      console.log(cleanText("Test@example.com")); // "Testexamplecom"
+      console.log(cleanText("Hello\tWorld\nTest")); // "Hello World Test"
+      console.log(cleanText("  Много   пробелов   ")); // "Много пробелов"
+    </script>
+  </body>
+</html>
