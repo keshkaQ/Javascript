@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=, initial-scale=1.0" />
+    <title>Homework 7 - Exceptions</title>
+  </head>
+  <body>
+    <!-- Пользователь вводит с клавиатуры в строку набор цифр 0 и 1 (число в двоичном представлении). 
+    Необходимо преобразовать строку в число целого типа  в десятичном представлении.
+    Предусмотреть случай выхода за границы диапазона, неправильный ввод. -->
+    <script>
+      function binaryToDecimal(binary) {
+        if (!binary) {
+          throw new Error("Введена пустая строка");
+        }
+
+    
+        if (!/^[01]+$/.test(binary)) {
+          throw new Error("Двоичное число должно содержать только цифры 0 и 1");
+        }
+
+        if (binary.length > 53) {
+          throw new Error("Число слишком большое (максимум 53 бита)");
+        }
+
+        const decimal = parseInt(binary, 2);
+
+        if (isNaN(decimal)) {
+          throw new Error("Ошибка преобразования числа");
+        }
+
+        return decimal;
+      }
+
+      try {
+        const inputNumber = prompt(
+          "Введите число в двоичном формате (только 0 и 1):"
+        );
+
+        const trimmedInput = inputNumber ? inputNumber.trim() : "";
+
+        const decimalNumber = binaryToDecimal(trimmedInput);
+        console.log("Введенное число в десятичном формате:", decimalNumber);
+        alert(`Двоичное: ${trimmedInput}\nДесятичное: ${decimalNumber}`);
+      } catch (error) {
+        console.error("Ошибка:", error.message);
+        alert(
+          `Ошибка: ${error.message}\nПожалуйста, введите корректное двоичное число (только 0 и 1)`
+        );
+      }
+    </script>
+  </body>
+</html>
