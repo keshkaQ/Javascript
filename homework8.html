@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homework №8</title>
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 8px 12px;
+        text-align: center;
+        min-width: 60px;
+      }
+
+      .firstList li {
+        list-style-type: "- ";
+      }
+      .nested {
+        list-style-type: none; /* Убираем стандартные маркеры */
+        counter-reset: chapter; /* Создаем счетчик глав */
+      }
+      .nested > li:before {
+        content: counter(chapter) ". "; /* Показываем значение счетчика с точкой */
+        counter-increment: chapter; /* Увеличиваем счетчик для каждого li */
+      }
+      .nested > li > ol {
+        list-style-type: none; /* Убираем стандартные маркеры у вложенных */
+        counter-reset: paragraph; /* Создаем счетчик параграфов */
+      }
+      .nested > li > ol > li:before {
+        content: counter(chapter) "." counter(paragraph) ". "; /* У вложенных параграфов делаем нумерацию счетчик главы.счетчик параграфа  */
+        counter-increment: paragraph; /* У вложенных параграфов увеличиваем счетчик для каждого li  */
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Task 1</h2>
+    <div id="arrayTable"></div>
+
+    <h2>Task 2</h2>
+    <div id="wordsContainer"></div>
+
+    <h2>Task 3</h2>
+    <table id="table">
+      <thead>
+        <tr>
+          <th onclick="sortColumn(0)" data-type="number">ID</th>
+          <th onclick="sortColumn(1)" data-type="text">Name</th>
+          <th onclick="sortColumn(2)" data-type="number">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Banana</td>
+          <td>12.99</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Apple</td>
+          <td>8.99</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Lemon</td>
+          <td>15.49</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Orange</td>
+          <td>25.00</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Task 4</h2>
+    <p>
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rem iure
+      voluptas obcaecati mollitia delectus? Consequatur illo natus vitae aliquid
+      incidunt a ipsa porro nemo officiis quas odio, laudantium atque similique.
+    </p>
+    <p>
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt officia
+      quae autem velit? Ad optio vel nemo quas nam unde quae id enim,
+      voluptatibus excepturi modi consectetur ab voluptate mollitia.
+    </p>
+    <p>
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt officia
+      quae autem velit? Ad optio vel nemo quas nam unde quae id enim,
+      voluptatibus excepturi modi consectetur ab voluptate mollitia.
+    </p>
+
+    <h2>Task 5</h2>
+    <div class="firstList">
+      <ul>
+        <li>
+          Первый
+          <ul>
+            <li>красный</li>
+            <li>синий</li>
+          </ul>
+        </li>
+        <li>
+          Второй
+          <ul>
+            <li>зеленый</li>
+          </ul>
+        </li>
+        <li>Третий</li>
+      </ul>
+    </div>
+
+    <ol class="nested">
+      <li>
+        Глава 1
+        <ol>
+          <li>Параграф 1</li>
+          <li>Параграф 2</li>
+        </ol>
+      </li>
+      <li>Глава 2</li>
+    </ol>
+
+    <script>
+      // Task 1: Генерация случайных чисел и их окрашивание (положительные - зеленым, отрицательные - красным)
+      const numbers = Array.from(
+        { length: 25 },
+        () => Math.floor(Math.random() * 101) - 50
+      );
+
+      let numbersTable = `<table><tr><th>№</th><th>Число</th></tr>`;
+      numbers.forEach((num, i) => {
+        const color = num < 0 ? "red" : num > 0 ? "green" : "black";
+        numbersTable += `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td style="color: ${color}; font-weight:bold">${num}</td>
+                </tr>
+            `;
+      });
+      numbersTable += "</table>";
+      document.getElementById("arrayTable").innerHTML = numbersTable;
+
+      // Task 2: Слова по алфавиту в таблице
+      const text = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris facilisis, 
+      odio sit amet auctor vestibulum, mi dui pharetra nisl, in pellentesque ipsum erat sit amet mauris.
+      Maecenas vitae nulla sapien. Aliquam malesuada quam vitae congue dapibus. Proin at nisl est. 
+      Fusce orci massa, porta rutrum leo nec, varius sodales odio. Interdum et malesuada fames ac 
+      ante ipsum primis in faucibus. Suspendisse dapibus mi nec dictum blandit. Quisque placerat ligula 
+      a eros semper, id porttitor arcu laoreet. Pellentesque lorem odio, ultrices ac magna vel, congue 
+      maximus tortor. Curabitur mollis vulputate nulla, a pellentesque est accumsan eget. Mauris urna 
+      augue, laoreet in erat sed, fringilla hendrerit odio. Nam eu fermentum eros. Curabitur laoreet, 
+      arcu sed pretium luctus, lorem enim finibus turpis, vitae laoreet lacus enim et ipsum. Sed volutpat 
+      sem at leo tincidunt, a vulputate ligula pharetra. Pellentesque eget orci congue, sodales mauris ac, 
+      dapibus erat.Vestibulum ut tristique est, id fermentum diam. Cras lacinia pulvinar tellus vitae 
+      vestibulum. Nunc maximus nulla quis maximus bibendum. Cras luctus gravida neque, eu finibus magna 
+      pulvinar et. In hendrerit ipsum a turpis varius cursus. Praesent posuere elit euismod diam elementum 
+      euismod. Mauris facilisis tellus quis metus aliquam, a congue turpis venenatis.`;
+
+      const words = [
+        ...new Set(
+          text
+            .toLowerCase()
+            .replace(/[.,!?;:]/g, "")
+            .split(/\s+/)
+            .filter((word) => word.length > 0)
+        ),
+      ].sort((a, b) => a.localeCompare(b));
+
+      let wordsTable = `<table><tr><th>№</th><th>Слово</th></tr>`;
+      words.forEach((word, i) => {
+        wordsTable += `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td>${word}</td>
+                </tr>
+            `;
+      });
+      wordsTable += "</table>";
+      document.getElementById("wordsContainer").innerHTML = wordsTable;
+
+      // Task 3: Сортировка таблицы в обе стороны
+      let currentSort = { column: -1, direction: "asc" };
+
+      function sortColumn(n) {
+        const table = document.getElementById("table");
+        const tbody = table.querySelector("tbody");
+        const rows = Array.from(tbody.rows);
+        const headers = table.querySelectorAll("th");
+        const dataType = headers[n].getAttribute("data-type");
+
+        // Определение направления
+        if (currentSort.column === n) {
+          currentSort.direction =
+            currentSort.direction === "asc" ? "desc" : "asc";
+        } else {
+          currentSort.column = n;
+          currentSort.direction = "asc";
+        }
+
+        // Сортировка
+        rows.sort((a, b) => {
+          let valA = a.cells[n].textContent.trim();
+          let valB = b.cells[n].textContent.trim();
+
+          if (dataType === "number") {
+            valA = parseFloat(valA) || 0;
+            valB = parseFloat(valB) || 0;
+          }
+
+          const comparison = valA > valB ? 1 : valA < valB ? -1 : 0;
+          return currentSort.direction === "asc" ? comparison : -comparison;
+        });
+
+        // Обновление
+        rows.forEach((row) => tbody.appendChild(row));
+      }
+
+      // Task 4: Отступ в начале каждого параграфа
+      document.querySelectorAll("p").forEach((p) => {
+        p.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;" + p.innerHTML;
+      });
+
+      // Task 5: Окрашивание вложенных элементов
+      document.querySelectorAll("ul ul li, ol ol li").forEach((item) => {
+        item.style.color = "gray";
+      });
+    </script>
+  </body>
+</html>
