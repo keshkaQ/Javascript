@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Форма объекта недвижимости</title>
+    <link href="style.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="javascript.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Форма объекта недвижимости</h1>
+
+      <div class="success-message" id="successMessage">
+        Данные успешно сохранены в файл!
+      </div>
+
+      <table class="form-table">
+        <thead>
+          <tr>
+            <th colspan="3">Форма ввода данных объекта недвижимости</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="column-title">Общие данные</td>
+            <td class="column-title">Персональные (технические) данные</td>
+            <td class="column-title">Специальные данные</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="form-group">
+                <label for="objectName" class="required"
+                  >Название объекта</label
+                >
+                <input
+                  type="text"
+                  id="objectName"
+                  placeholder="Введите название объекта"
+                />
+                <div class="error" id="objectNameError">
+                  Название объекта обязательно для заполнения
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="objectType" class="required">Тип объекта</label>
+                <select id="objectType">
+                  <option value="">Выберите тип объекта</option>
+                  <option value="apartment">Квартира</option>
+                  <option value="house">Дом</option>
+                  <option value="commercial">Коммерческое помещение</option>
+                  <option value="land">Земельный участок</option>
+                  <option value="other">Другое</option>
+                </select>
+                <div class="error" id="objectTypeError">
+                  Тип объекта обязателен для выбора
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="address" class="required">Адрес</label>
+                <textarea
+                  id="address"
+                  rows="3"
+                  placeholder="Полный адрес объекта"
+                ></textarea>
+                <div class="error" id="addressError">
+                  Адрес обязателен для заполнения
+                </div>
+              </div>
+
+              <div class="section-divider"></div>
+
+              <div class="form-group">
+                <label for="area">Площадь (м²)</label>
+                <input
+                  type="number"
+                  id="area"
+                  min="1"
+                  max="10000"
+                  placeholder="Например: 75"
+                />
+                <div class="error" id="areaError">
+                  Площадь должна быть от 1 до 10000 м²
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Статус объекта</label>
+                <div class="radio-group">
+                  <div class="radio-item">
+                    <input
+                      type="radio"
+                      id="statusActive"
+                      name="status"
+                      value="active"
+                      checked
+                    />
+                    <label for="statusActive">Активен</label>
+                  </div>
+                  <div class="radio-item">
+                    <input
+                      type="radio"
+                      id="statusInactive"
+                      name="status"
+                      value="inactive"
+                    />
+                    <label for="statusInactive">Неактивен</label>
+                  </div>
+                  <div class="radio-item">
+                    <input
+                      type="radio"
+                      id="statusArchive"
+                      name="status"
+                      value="archive"
+                    />
+                    <label for="statusArchive">В архиве</label>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <div class="form-group">
+                <label for="ownerName" class="required">ФИО владельца</label>
+                <input
+                  type="text"
+                  id="ownerName"
+                  placeholder="Иванов Иван Иванович"
+                />
+                <div class="error" id="ownerNameError">
+                  ФИО владельца обязательно для заполнения
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="ownerPhone" class="required"
+                  >Телефон владельца</label
+                >
+                <input
+                  type="text"
+                  id="ownerPhone"
+                  placeholder="+7 XXX XXX-XX-XX"
+                />
+                <div class="error" id="ownerPhoneError">
+                  Введите корректный номер телефона
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="ownerEmail" class="required">Email владельца</label>
+                <input
+                  type="email"
+                  id="ownerEmail"
+                  placeholder="example@mail.ru"
+                />
+                <div class="error" id="ownerEmailError">
+                  Введите корректный email адрес
+                </div>
+              </div>
+
+              <div class="section-divider"></div>
+
+              <div class="form-group">
+                <label for="ownerINN" class="required">ИНН владельца</label>
+                <input
+                  type="text"
+                  id="ownerINN"
+                  placeholder="XXX-XXX-XXX-XXX"
+                  maxlength="14"
+                />
+                <div class="error" id="ownerINNError">
+                  ИНН должен содержать 12 цифр для физ.лица или 10 цифр для
+                  юр.лица
+                </div>
+                <div class="info-text">
+                  Формат: для физ.лица - 12 цифр, для юр.лица - 10 цифр
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="ownerType">Тип владельца</label>
+                <div class="radio-group">
+                  <div class="radio-item">
+                    <input
+                      type="radio"
+                      id="ownerIndividual"
+                      name="ownerType"
+                      value="individual"
+                      checked
+                    />
+                    <label for="ownerIndividual">Физическое лицо</label>
+                  </div>
+                  <div class="radio-item">
+                    <input
+                      type="radio"
+                      id="ownerLegal"
+                      name="ownerType"
+                      value="legal"
+                    />
+                    <label for="ownerLegal">Юридическое лицо</label>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <div class="form-group">
+                <label for="cadastralNumber" class="required"
+                  >Кадастровый номер</label
+                >
+                <input
+                  type="text"
+                  id="cadastralNumber"
+                  placeholder="XX:XX:XXXXXX:XXX"
+                />
+                <div class="error" id="cadastralNumberError">
+                  Кадастровый номер обязателен для заполнения
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="propertyRights">Право собственности</label>
+                <select id="propertyRights">
+                  <option value="ownership">Собственность</option>
+                  <option value="lease">Аренда</option>
+                  <option value="operational_management">
+                    Оперативное управление
+                  </option>
+                  <option value="use">Пользование</option>
+                  <option value="other">Другое</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Особые отметки</label>
+                <div class="checkbox-group">
+                  <div class="checkbox-item">
+                    <input
+                      type="checkbox"
+                      id="markHistorical"
+                      value="historical"
+                    />
+                    <label for="markHistorical">Исторический объект</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="markCultural" value="cultural" />
+                    <label for="markCultural"
+                      >Объект культурного наследия</label
+                    >
+                  </div>
+                  <div class="checkbox-item">
+                    <input
+                      type="checkbox"
+                      id="markRestrictions"
+                      value="restrictions"
+                    />
+                    <label for="markRestrictions"
+                      >Ограничения в использовании</label
+                    >
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="markSecurity" value="security" />
+                    <label for="markSecurity">Объект под охраной</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section-divider"></div>
+
+              <div class="form-group">
+                <label for="valuationDate">Дата оценки</label>
+                <input type="date" id="valuationDate" />
+              </div>
+
+              <div class="form-group">
+                <label for="valuationAmount" class="required"
+                  >Оценочная стоимость (руб.)</label
+                >
+                <input
+                  type="number"
+                  id="valuationAmount"
+                  min="0"
+                  placeholder="Например: 5000000"
+                />
+                <div class="error" id="valuationAmountError">
+                  Стоимость не может быть отрицательной
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" class="msgAboutRequiredFields">
+              <small>
+                Все поля, отмеченные
+                <span style="color: #e74c3c">*</span>, обязательны для
+                заполнения
+              </small>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="buttons">
+        <button class="save-btn" id="saveBtn">Сохранить в JSON</button>
+        <button class="clear-btn" id="clearBtn">Очистить форму</button>
+      </div>
+    </div>
+  </body>
+</html>
